@@ -1,0 +1,2 @@
+user: django
+pass: DWhouse130_
