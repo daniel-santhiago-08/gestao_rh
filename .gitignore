@@ -1,4 +1,4 @@
 .idea
 *.sqlite3
-gestao_rh/
+venv/
 __pycache__
