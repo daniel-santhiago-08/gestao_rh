@@ -1,2 +1,6 @@
 user: django
 pass: DWhouse130_
+
+user: daniel.santhiago
+pass: DWhouse130_
+

@@ -1,14 +1,20 @@
-{% extends 'core/base.html' %}
+{% extends 'base.html' %}
 {% block main %}
-   <div class="row">
+<div class="row">
     <div class="col-sm">
       One of three columns
     </div>
     <div class="col-sm">
-      One of three columns
+      Olá {{ usuario.funcionario.nome }}
+        <a href="{% url 'list_funcionarios' %}">Gerenciar funcionários</a>
     </div>
     <div class="col-sm">
-      One of three columns
+        <a href="{% url 'logout' %}">Logout</a>
+        {% if usuario.funcionario.empresa %}
+            <a href="{% url 'edit_empresa' usuario.funcionario.empresa.id %}">Editar empresa</a>
+        {% else %}
+            <a href="{% url 'create_empresa' %}">Criar empresa</a>
+        {% endif %}
     </div>
-  </div>
+</div>
 {% endblock %}
