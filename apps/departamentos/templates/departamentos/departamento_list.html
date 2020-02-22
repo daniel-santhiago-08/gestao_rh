@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container-fluid">
+    <h5>Lista de Departamentos:</h5>
+        {% for departamento in object_list %}
+        <li>
+            <a href="{% url 'update_departamento' departamento.id %}">
+                {{departamento}}
+            </a>
+            <a href="{% url 'delete_departamento' departamento.id %}">
+                Deletar
+            </a>
+        </li>
+
+        {% endfor %}
+
+    <a href="{% url 'create_departamento' %}" class="btn btn-info">Novo</a>
+</div>
+{% endblock %}

@@ -2,9 +2,20 @@
 
 {% block main %}
 
+<div class="container-fluid">
+    <h5>Lista de Funcionários:</h5>
+        {% for funcionario in object_list %}
+        <li>
+            <a href="{% url 'update_funcionario' funcionario.id %}">
+                {{funcionario}}
+            </a>
+            <a href="{% url 'delete_funcionario'  funcionario.id %}">
+                Deletar
+            </a>
+        </li>
 
-    {% for funcionario in object_list %}
-    <li>{{funcionario}}</li>
-    {% endfor %}
+        {% endfor %}
 
+    <a href="{% url 'create_funcionario' %}" class="btn btn-info">Novo</a>
+</div>
 {% endblock %}
