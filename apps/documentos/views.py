@@ -9,7 +9,7 @@ from django.views.generic import (
 
 class DocumentoCreate(CreateView):
     template_name = 'documentos/documento_form.html'
-    models = Documento
+    model = Documento
     fields = ['descricao','arquivo']
 
     def post(self, request, *args, **kwargs):
@@ -21,21 +21,9 @@ class DocumentoCreate(CreateView):
         else:
             return self.form_invalid(form)
 
-    # def get_success_url(self):
-    #     return reverse('update_funcionarios', args=[self.kwargs['funcionario_id']])
+    # def get_queryset(self):
+    #     funcionario_selecionado = self.kwargs['funcionario_id']
+    #     queryset = Documento.objects.filter(pertence=funcionario_selecionado)
+    #     return queryset
 
 
-    def get_queryset(self):
-        funcionario_selecionado = self.kwargs['funcionario_id']
-        queryset = Documento.objects.filter(pertence=funcionario_selecionado)
-        return queryset
-
-
-
-    # def form_valid(self, form):
-    #     funcionario = form.save(commit=False)
-    #     username = funcionario.nome.split(' ')[0]+ funcionario.nome.split(' ')[1]
-    #     funcionario.empresa = self.request.user.funcionario.empresa
-    #     funcionario.user = User.objects.create(username=username)
-    #     funcionario.save()
-    #     return super(FuncionarioNovo, self).form_valid(form)

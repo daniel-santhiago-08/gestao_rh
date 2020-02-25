@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+{% endblock %}
+
+{% block main %}
+
+<br><br>
+<div class="table-responsive-sm ">
+    <table class="table table-sm table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Produto</th>
+          <th scope="col">Loja</th>
+          <th scope="col">Data</th>
+          <th scope="col">Preço</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for price in object_list %}
+        <tr>
+            <th scope="row">{{price.id}}</th>
+            <td>{{price.produto}}</td>
+            <td>{{price.loja}}</td>
+            <td>{{price.data_de_extracao|date}}</td>
+            <td>{{price.preco}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Primeira</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

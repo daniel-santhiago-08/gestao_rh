@@ -16,14 +16,17 @@
     {% endfor %}
     </ul>
 
-
+    <button type="submit" class="btn btn-primary">Salvar</button>
     {% if object %}
+    <a href="{% url 'delete_funcionario'  funcionario.id %}" class="btn btn-danger">
+        Deletar
+    </a>
     <a href="{% url 'create_documento' object.id %}" class="btn btn-success">
         Adicionar documento
     </a>
     {% endif %}
     <br><br>
-    <button type="submit" class="btn btn-primary">Salvar</button>
+
 </form>
 
 {% endblock %}

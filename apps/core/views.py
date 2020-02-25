@@ -8,3 +8,9 @@ def home(request):
     data = {}
     data['usuario'] = request.user
     return render(request, 'core/index.html', data)
+
+def template(request):
+    return render(request, 'index.html')
+
+def sb_admin(request):
+    return render(request, 'sb_admin/index.html')

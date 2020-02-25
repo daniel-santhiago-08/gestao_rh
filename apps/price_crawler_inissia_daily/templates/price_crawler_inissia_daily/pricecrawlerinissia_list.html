@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<br><br>
+<table class="table table-sm table-striped table-dark table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Produto</th>
+      <th scope="col">Loja</th>
+      <th scope="col">Data</th>
+      <th scope="col">Preço</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for price in object_list %}
+    <tr>
+        <th scope="row">{{price.id}}</th>
+        <td>{{price.produto}}</td>
+        <td>{{price.loja}}</td>
+        <td>{{price.data_de_extracao|date}}</td>
+        <td>{{price.preco}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

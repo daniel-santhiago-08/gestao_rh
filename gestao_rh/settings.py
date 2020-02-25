@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'apps.registro_hora_extra',
     'apps.core',
     'bootstrapform',
+    'django_filters',
+    'apps.price_crawler_inissia_daily',
+    'apps.price_crawler',
 ]
 
 MIDDLEWARE = [
@@ -81,12 +84,53 @@ WSGI_APPLICATION = 'gestao_rh.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+LOCAL_DATABASE_SQLITE3 = 'C:\\Users\\daniel.santhiago\\OneDrive - Interpublic\\Documents\\Daniel\\Nestle\\price_crawler\\pythonsqlite.db'
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME':  os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+
+    'crawler': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'pythonsqlite.db'),
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'pythonsqlite.db'),
+#     }
+# }
+
+
+# DATABASE_ROUTERS = ['gestao_rh.DBRoutes.DBRoutes']
+# DATABASE_ROUTERS = ['gestao_rh.gestao_rh.DBRoutes.DBRoutes']
+
+
+# DATABASES = {
+# 	'default': {
+#         'NAME' : 'DB_NLAB',
+#         'ENGINE': 'sql_server.pyodbc',
+#         'HOST': 'SPLADB30',
+#         'USER': '',
+#         'PASSWORD': '',
+#     }
+# }
+
+
 
 
 # Password validation
