@@ -1,56 +1,38 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
 
+{% block title %} Evolução {% endblock %}
 {% block navigation %}
+{% endblock %}
+
+{% block export %}
+{% include 'export.html' with csv='csv_evolution' %}
+{% endblock %}
+
+{% block filter %}
+    {% include 'filter.html' %}
 {% endblock %}
 
 {% block main %}
 
-<br><br>
-<div class="table-responsive-sm ">
-    <table class="table table-sm table-striped table-hover">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Data</th>
-          <th scope="col">Mini Me</th>
-          <th scope="col">Essenza</th>
-          <th scope="col">Inissia</th>
-          <th scope="col">Mimo Cafeteira</th>
-          <th scope="col">Pop Plus</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for price in object_list %}
-        <tr>
-            <th scope="row">{{price.id}}</th>
-            <td>{{price.data_de_extracao|date}}</td>
-            <td>{{price.mini_me}}</td>
-            <td>{{price.essenza}}</td>
-            <td>{{price.inissia}}</td>
-            <td>{{price.mimo_cafeteira}}</td>
-            <td>{{price.pop_plus}}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-</div>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; Primeira</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-        {% endif %}
-
-        <span class="current">
-            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
-        {% endif %}
-    </span>
-</div>
+<table id="table-fill"
+       class="table rounded mt-2 table-sm" >
+    <thead id="table-fill-header" class="thead"></thead>
+    <tbody id="table-fill-body"></tbody>
+</table>
 
 {% endblock %}
+
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock %}
+
+{% block script %}
+<script> var url = "{% url 'list_price_crawler_evolution' %}";</script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/crawler-functions.js' %}"></script>
+<script src="{% static 'js/price-crawler-evolution.js' %}"></script>
+{% endblock %}
+

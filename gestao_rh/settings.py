@@ -47,6 +47,10 @@ INSTALLED_APPS = [
     'apps.core',
     'bootstrapform',
     'django_filters',
+    'mathfilters',
+    'tempus_dominus',
+    'bootstrap_datepicker_plus',
+    'jquery_ui',
     'apps.price_crawler_inissia_daily',
     'apps.price_crawler',
 ]
@@ -174,8 +178,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "staticfiles"),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 

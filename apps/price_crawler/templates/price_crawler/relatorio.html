@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %} Histórico {% endblock %}
+{% block navigation %}
+{% endblock %}
+
+{% block filter %}
+    {% include 'filter.html' %}
+{% endblock %}
+
+{% block main %}
+
+{{sales}}
+<table id="table-fill"
+       class="table rounded mt-2 table-sm" >
+    <thead id="table-fill-header" class="thead"></thead>
+    <tbody id="table-fill-body"></tbody>
+</table>
+
+
+{% endblock %}
+
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock %}
+
+{% block script %}
+<script> var url = "{% url 'pdf-report' %}";</script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/crawler-functions.js' %}"></script>
+<script src="{% static 'js/price-crawler-hist.js' %}"></script>
+{% endblock %}

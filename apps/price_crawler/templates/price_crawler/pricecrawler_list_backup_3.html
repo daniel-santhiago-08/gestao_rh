@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %} Histórico {% endblock %}
+{% block navigation %}
+{% endblock %}
+
+
+{% block main %}
+
+<!--<div class="d-flex container">-->
+
+<form method="POST">
+{% csrf_token %}
+
+
+    <div class="bg-light border-right" id="sidebar-wrapper" style="width: 45%;">
+        <div class="sidebar-heading" align="center" >Filtros </div>
+        <div class="list-group list-group-flush" >
+
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" >Produto</span>
+              </div>
+                <input type="text" class="form-control" id="produto_search" ><br>
+            </div>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" >Loja</span>
+              </div>
+                <input type="text" class="form-control" id="loja_search"><br>
+            </div>
+            <div class="input-group mb-2" >
+              <div class="input-group-prepend">
+                <span class="input-group-text" >Inicio</span>
+              </div>
+                <input type="date" value=""
+                       class="form-control"
+                       id="data_inicial_search"><br>
+            </div>
+            <div class="input-group mb-2" >
+              <div class="input-group-prepend">
+                <span class="input-group-text" >Fim</span>
+              </div>
+                <input type="date" value=""
+                       class="form-control"
+                       id="data_final_search"><br>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="text-center col-md-6">
+            <div class="mr-2"></div>
+        </div>
+    </div>
+
+<div class="table-responsive">
+    <table class="table table-sm table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Produto
+                <i class="fa fa-chevron-down ml-3" id="produto-order-desc" ></i>
+                <i class="fa fa-chevron-up" id="produto-order-asc" ></i>
+            </th>
+            <th scope="col">Loja
+                <i class="fa fa-chevron-down ml-3" id="loja-order-desc"></i>
+                <i class="fa fa-chevron-up" id="loja-order-asc"></i>
+            </th>
+            <th scope="col">Data
+                <i class="fa fa-chevron-down ml-3" id="data-order-desc"></i>
+                <i class="fa fa-chevron-up" id="data-order-asc"></i>
+            </th>
+            <th scope="col">Preço
+                <i class="fa fa-chevron-down ml-3" id="preco-order-desc"></i>
+                <i class="fa fa-chevron-up" id="preco-order-asc"></i>
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% with ''|center:10 as range %}
+        {% for _ in range %}
+            <tr>
+            <th scope="row" id="search-result-object-id-{{forloop.counter0}}"></th>
+            <td id="search-result-object-produto-{{forloop.counter0}}"></td>
+            <td id="search-result-object-loja-{{forloop.counter0}}"></td>
+            <td id="search-result-object-data-{{forloop.counter0}}"></td>
+            <td id="search-result-object-preco-{{forloop.counter0}}"></td>
+            </tr>
+        {% endfor %}
+        {% endwith %}
+        </tbody>
+    </table>
+
+    <div class="col-md-12 text-center">
+        <div class="btn-group" role="group">
+            <button type="button" id="first-page" class="btn btn-secondary mr-1"></button>
+            <button type="button" id="previous-page" class="btn btn-secondary mr-1"></button>
+            <button type="button" id="current-page" class="btn btn-secondary "></button>
+            <button type="button" id="next-page" class="btn btn-secondary ml-1"></button>
+            <button type="button" id="last-page" class="btn btn-secondary ml-1"></button>
+        </div>
+    </div>
+
+</div>
+</form>
+<!--</div>-->
+
+
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/filter.js' %}"></script>
+{% endblock %}
