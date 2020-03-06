@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['price-crawler-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
                  'django-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
-
+                 'ec2-52-33-35-15.us-west-2.compute.amazonaws.com',
                  ]
 
 
