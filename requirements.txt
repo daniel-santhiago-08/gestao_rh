@@ -28,7 +28,6 @@ PyPDF2==1.26.0
 pypiwin32==223
 python-dateutil==2.8.0
 pytz==2019.3
-pywin32==227
 PyYAML==5.2
 reportlab==3.5.34
 requests==2.20.1
