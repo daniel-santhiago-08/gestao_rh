@@ -27,7 +27,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'zq@y^pooh%2z2vqmtcc^i^0lj9@srfhi2hih0sv50^_ytr3^zk'
 DEBUG = True
 
-ALLOWED_HOSTS = ['price-crawler-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com/price-crawler/hist',
+ALLOWED_HOSTS = ['price-crawler-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
+                 'django-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
 
                  ]
 
