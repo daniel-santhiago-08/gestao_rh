@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'bootstrapform',
     'django_filters',
     'mathfilters',
-    'tempus_dominus',
     'bootstrap_datepicker_plus',
     'jquery_ui',
     'apps.price_crawler_inissia_daily',

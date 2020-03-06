@@ -1,14 +1,11 @@
 import csv
 import io
-
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.http import JsonResponse, HttpResponse, Http404
 from django.views import View
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.paginator import _
-from reportlab.pdfgen import canvas
-from xhtml2pdf.pisa import pisaDocument
 from django.template.loader import get_template
 from django.core import serializers
 from .filters import PriceCrawlerFilter
@@ -20,7 +17,6 @@ from datetime import datetime, timedelta
 from django.db.models import Count, Min, Sum, Avg, Max
 from .models import PriceCrawler, PriceCrawlerMin, PriceCrawlerEvolution
 from django.views.generic import ListView
-from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 from django import forms
 from django.core import serializers
 
