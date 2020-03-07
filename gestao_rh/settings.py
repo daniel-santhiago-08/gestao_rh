@@ -30,6 +30,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['price-crawler-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
                  'django-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
                  'ec2-52-33-35-15.us-west-2.compute.amazonaws.com',
+                 '52.33.35.15',
+                 '52.13.64.217',
                  ]
 
 
@@ -49,9 +51,6 @@ INSTALLED_APPS = [
     'apps.registro_hora_extra',
     'apps.core',
     'bootstrapform',
-    'django_filters',
-    'mathfilters',
-    'bootstrap_datepicker_plus',
     'jquery_ui',
     'apps.price_crawler_inissia_daily',
     'apps.price_crawler',
