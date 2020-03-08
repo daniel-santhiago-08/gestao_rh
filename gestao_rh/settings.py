@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'apps.documentos',
     'apps.registro_hora_extra',
     'apps.core',
-    'bootstrapform',
     'jquery_ui',
     'apps.price_crawler_inissia_daily',
     'apps.price_crawler',
