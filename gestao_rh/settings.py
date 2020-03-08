@@ -28,6 +28,7 @@ SECRET_KEY = 'zq@y^pooh%2z2vqmtcc^i^0lj9@srfhi2hih0sv50^_ytr3^zk'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
+                 'price-crawler-api.eba-2izq2tvm.sa-east-1.elasticbeanstalk.com',
                 'price-crawler-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
                  'django-env.eba-b7ikfkzd.us-east-2.elasticbeanstalk.com',
                  'ec2-52-33-35-15.us-west-2.compute.amazonaws.com',
