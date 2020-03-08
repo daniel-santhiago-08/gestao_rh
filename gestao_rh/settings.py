@@ -45,13 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.empresas',
-    'apps.funcionarios',
-    'apps.departamentos',
-    'apps.documentos',
-    'apps.registro_hora_extra',
     'apps.core',
-    'apps.price_crawler_inissia_daily',
     'apps.price_crawler',
 ]
 

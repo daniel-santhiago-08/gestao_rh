@@ -20,11 +20,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('apps.core.urls')),
-    path('funcionarios/', include('apps.funcionarios.urls')),
-    path('departamentos/', include('apps.departamentos.urls')),
-    path('empresa/', include('apps.empresas.urls')),
-    path('documento/', include('apps.documentos.urls')),
-    path('horas-extras/', include('apps.registro_hora_extra.urls')),
     path('price-crawler/', include('apps.price_crawler.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
