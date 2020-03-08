@@ -133,6 +133,8 @@ class PriceCrawlerList(ListView):
     rows_per_page = 10
     order_by = "-data_de_extracao"
     filtered_fields = ['produto','loja','data_de_extracao']
+    field_names_order = ['id','loja','produto','data_de_extracao','preco']
+
     filename = 'Histórico'
     def export_csv(self):
         dados = PriceCrawler.objects.using('crawler').all()
@@ -212,6 +214,11 @@ class PriceCrawlerList(ListView):
             slice_start = (int(current_page) - 1) * self.rows_per_page + 0
             slice_end = (int(current_page) - 1) * self.rows_per_page + self.rows_per_page
 
+            if self.field_names_order:
+                field_names_order = self.field_names_order
+            else:
+                field_names_order = []
+
             context = {
                 'object_list': querylist[slice_start:slice_end],
                 'first_page': first_page,
@@ -222,6 +229,7 @@ class PriceCrawlerList(ListView):
                 'min_date': min_date,
                 'max_date': max_date,
                 'fields_list': fields_list,
+                'field_names_order': field_names_order,
             }
 
             context_json = json.dumps(
@@ -245,6 +253,7 @@ class PriceCrawlerMinList(ListView):
     rows_per_page = 10
     order_by = "-data_de_extracao"
     filtered_fields = ['produto','loja','data_de_extracao']
+    field_names_order = ['id','loja','produto','data_de_extracao','preco']
     filename = 'PreçoMínimo'
 
 
@@ -326,6 +335,11 @@ class PriceCrawlerMinList(ListView):
             slice_start = (int(current_page) - 1) * self.rows_per_page + 0
             slice_end = (int(current_page) - 1) * self.rows_per_page + self.rows_per_page
 
+            if self.field_names_order:
+                field_names_order = self.field_names_order
+            else:
+                field_names_order = []
+
             context = {
                 'object_list': querylist[slice_start:slice_end],
                 'first_page': first_page,
@@ -336,6 +350,7 @@ class PriceCrawlerMinList(ListView):
                 'min_date': min_date,
                 'max_date': max_date,
                 'fields_list': fields_list,
+                'field_names_order': field_names_order,
             }
 
             context_json = json.dumps(
@@ -355,6 +370,8 @@ class PriceCrawlerEvolutionList(ListView):
     rows_per_page = 7
     order_by = "-data_de_extracao"
     filtered_fields = ['data_de_extracao']
+    field_names_order = ['id','data_de_extracao',
+     'mini_me','essenza','inissia','mimo_cafeteira','pop_plus']
     filename = 'Evolução'
 
     def export_csv(self):
@@ -434,6 +451,11 @@ class PriceCrawlerEvolutionList(ListView):
             slice_start = (int(current_page) - 1) * self.rows_per_page + 0
             slice_end = (int(current_page) - 1) * self.rows_per_page + self.rows_per_page
 
+            if self.field_names_order:
+                field_names_order = self.field_names_order
+            else:
+                field_names_order = []
+
             context = {
                 'object_list': querylist[slice_start:slice_end],
                 # 'num': num,
@@ -445,6 +467,7 @@ class PriceCrawlerEvolutionList(ListView):
                 'min_date': min_date,
                 'max_date': max_date,
                 'fields_list': fields_list,
+                'field_names_order': field_names_order,
             }
 
             context_json = json.dumps(

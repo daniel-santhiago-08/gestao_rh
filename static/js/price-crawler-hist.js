@@ -5,6 +5,8 @@ $(function() {
     var etapa = 'inicial';
     var filter_element_id = "#filters-list";
 
+    console.log("TESTE STATIC FOLDER");
+
     // REQUISIÇÃO PARA OBTER A LISTA DE CAMPOS DO MODELO
     result = get_fields_ajax(url)
     result[0] = fields_dictionary
@@ -155,6 +157,8 @@ function result_actions(result, order_by){
     next_page = result['next_page'];
     last_page = result['last_page'];
     fields_list = result['fields_list'];
+    field_names_order = result['field_names_order'];
+
 
     if (next_page >= last_page){
         next_page = last_page;
@@ -195,7 +199,7 @@ function result_actions(result, order_by){
     date_field = 'data_de_extracao'
 
     // CRIAÇÃO E PREENCHIMENTO DA TABELA COM JAVASCRIPT
-    createFillTable(object_list, fields_list, order_by, date_field)
+    createFillTable(object_list, fields_list, field_names_order, order_by, date_field)
 
 }
 

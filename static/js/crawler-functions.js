@@ -131,7 +131,7 @@ function createFilter(filters_dictionary, filter_element_id ){
     })
 }
 
-function createFillTable(object_list,fields_list, order_by, date_field){
+function createFillTable(object_list,fields_list,field_names_order, order_by, date_field){
 
     $("#table-fill-header").empty();
     $("#table-fill-body").empty();
@@ -144,6 +144,18 @@ function createFillTable(object_list,fields_list, order_by, date_field){
     }
 
     // CRIAÇÃO DO HEADER
+
+    console.log("Loop object_list");
+    console.log(object_list.slice(0,1));
+//    field_names_order = ['id','loja','produto','data_de_extracao','preco'];
+    var object_list_new_order = JSON.parse(JSON.stringify( object_list, field_names_order , 4));
+    console.log(object_list_new_order);
+
+    if ( field_names_order.length > 0){
+        object_list = JSON.parse(JSON.stringify( object_list, field_names_order , 4));
+    }
+
+
     $.each(object_list.slice(0,1), function (row, data) {
         table_row = $("<tr></tr>").text('')
         $("#table-fill-header").append(table_row);
