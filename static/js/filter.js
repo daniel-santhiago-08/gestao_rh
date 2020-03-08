@@ -1,22 +1,21 @@
 // INICIALIZAÇAO DA PÁGINA
 $(function() {
-    // CAPTURANDO O TOKEN PADRÃO
-    token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
     // ALTERANDO AS CONFIGURAÇÕES PARA O BOTÃO DE PÁGINA 1
     $('.btn-group button').eq(0).addClass("active");
-    $('.btn-group button').eq(0).addClass("btn-dark");
-    $('.btn-group button').eq(0).removeClass("btn-secondary");
-    var btnActive = $('.btn-group button.active');
-    var current_page = btnActive.text()
+    $('.btn-group button').eq(0).addClass("btn-primary");
+    $('.btn-group button').eq(0).removeClass("btn-outline-primary");
+
 
     $.ajax({
     type: 'POST',
     url: '/price-crawler/hist/',
     data: {
-        csrfmiddlewaretoken: token,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         pesquisa_produto: $('#produto_search').val(),
         pesquisa_loja: $('#loja_search').val(),
-        current_page: current_page
+        current_page: $('.btn-group button.active').val(),
+
     },
     success: function(result){
         $('#data_inicial_search').attr('value', result['min_date']);
@@ -29,43 +28,38 @@ $(function() {
 
 // FILTRO DE PRODUTO
 $('#produto_search').on('keyup', function(e) {
-    token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-    var btnActive = $('.btn-group button.active');
-    var current_page = btnActive.text();
 
     $.ajax({
     type: 'POST',
     url: '/price-crawler/hist/',
     data: {
-        csrfmiddlewaretoken: token,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         pesquisa_produto: $('#produto_search').val(),
         pesquisa_loja: $('#loja_search').val(),
         pesquisa_data_inicial: $('#data_inicial_search').val(),
         pesquisa_data_final: $('#data_final_search').val(),
-        current_page: current_page
+        current_page: $('.btn-group button.active').val(),
     },
     success: function(result){
         result_actions(result)
-        }
+    }
     });
 });
 
 // FILTRO DE LOJA
 $('#loja_search').on('keyup', function(e) {
-    token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-    var btnActive = $('.btn-group button.active');
-    var current_page = btnActive.text();
 
     $.ajax({
     type: 'POST',
     url: '/price-crawler/hist/',
     data: {
-        csrfmiddlewaretoken: token,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         pesquisa_produto: $('#produto_search').val(),
         pesquisa_loja: $('#loja_search').val(),
         pesquisa_data_inicial: $('#data_inicial_search').val(),
         pesquisa_data_final: $('#data_final_search').val(),
-        current_page: current_page
+        current_page: $('.btn-group button.active').text(),
+
     },
     success: function(result){
         result_actions(result)
@@ -73,26 +67,44 @@ $('#loja_search').on('keyup', function(e) {
     });
 });
 
-// FILTRO DE DATA
+// FILTRO DE DATA INICIAL
 $('#data_inicial_search').change(function(e) {
-    token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
-    var btnActive = $('.btn-group button.active');
-    var current_page = btnActive.text();
 
     $.ajax({
     type: 'POST',
     url: '/price-crawler/hist/',
     data: {
-        csrfmiddlewaretoken: token,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         pesquisa_produto: $('#produto_search').val(),
         pesquisa_loja: $('#loja_search').val(),
         pesquisa_data_inicial: $('#data_inicial_search').val(),
         pesquisa_data_final: $('#data_final_search').val(),
-        current_page: current_page
+        current_page: $('.btn-group button.active').val(),
     },
     success: function(result){
         result_actions(result)
-        }
+    }
+    });
+});
+
+
+// FILTRO DE DATA FINAL
+$('#data_final_search').change(function(e) {
+
+    $.ajax({
+    type: 'POST',
+    url: '/price-crawler/hist/',
+    data: {
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        pesquisa_produto: $('#produto_search').val(),
+        pesquisa_loja: $('#loja_search').val(),
+        pesquisa_data_inicial: $('#data_inicial_search').val(),
+        pesquisa_data_final: $('#data_final_search').val(),
+        current_page: $('.btn-group button.active').text(),
+    },
+    success: function(result){
+        result_actions(result)
+    }
     });
 });
 
@@ -100,26 +112,23 @@ $('#data_inicial_search').change(function(e) {
 // FILTRO DE PÁGINA
 $('.btn-group button').on('click', function(e) {
     $('.btn-group button').not(this).removeClass("active");
-    $('.btn-group button').not(this).removeClass("btn-dark");
-    $('.btn-group button').not(this).addClass("btn-secondary");
+    $('.btn-group button').not(this).removeClass("btn-primary");
+    $('.btn-group button').not(this).addClass("btn-outline-primary");
 
     $(this).addClass("active");
-    $(this).addClass("btn-dark");
-    $(this).removeClass("btn-secondary");
-    var btnActive = $('.btn-group button.active');
-    var current_page = btnActive.text();
+    $(this).addClass("btn-primary");
+    $(this).removeClass("btn-outline-primary");
 
-    token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
     $.ajax({
     type: 'POST',
     url: '/price-crawler/hist/',
     data: {
-        csrfmiddlewaretoken: token,
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
         pesquisa_produto: $('#produto_search').val(),
         pesquisa_loja: $('#loja_search').val(),
         pesquisa_data_inicial: $('#data_inicial_search').val(),
         pesquisa_data_final: $('#data_final_search').val(),
-        current_page: current_page
+        current_page: $('.btn-group button.active').text(),
     },
     success: function(result){
         result_actions(result)
@@ -127,10 +136,74 @@ $('.btn-group button').on('click', function(e) {
     });
 });
 
-$('.thead-dark th').on('click', function(e) {
-    text = $(this).text();
-    alert(text);
+var order_by = "data_de_extracao";
+
+// ORDERNAÇÃO
+$('.thead i.fa').on('click', function() {
+
+    $(".thead").find("i").css('color', 'black');
+    $(this).css('color', 'blue');
+
+    $(this).toggleClass('fa-chevron-down');
+    $(this).toggleClass('fa-chevron-up');
+
+    id = $(this).attr("id");
+
+    if (id == "produto-order"){
+        if (order_by == 'produto'){
+            order_by = '-produto';
+        }else if (order_by == '-produto'){
+            order_by = 'produto';
+        }else{
+            order_by = 'produto';
+        }
+    }else if (id == "loja-order"){
+        if (order_by == 'loja'){
+            order_by = '-loja';
+        }else if (order_by == '-loja'){
+            order_by = 'loja';
+        }else{
+            order_by = 'loja';
+        }
+
+    }else if (id == "data-order"){
+        if (order_by == 'data_de_extracao'){
+            order_by = '-data_de_extracao';
+        }else if (order_by == '-data_de_extracao'){
+            order_by = 'data_de_extracao';
+        }else{
+            order_by = 'data_de_extracao';
+        }
+
+    }else if (id == "preco-order"){
+        if (order_by == 'preco'){
+            order_by = '-preco';
+        }else if (order_by == '-preco'){
+            order_by = 'preco';
+        }else{
+            order_by = 'preco';
+        }
+    }
+
+
+    $.ajax({
+    type: 'POST',
+    url: '/price-crawler/hist/',
+    data: {
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        pesquisa_produto: $('#produto_search').val(),
+        pesquisa_loja: $('#loja_search').val(),
+        pesquisa_data_inicial: $('#data_inicial_search').val(),
+        pesquisa_data_final: $('#data_final_search').val(),
+        current_page: $('.btn-group button.active').text(),
+        order_by : order_by
+    },
+    success: function(result){
+        result_actions(result)
+        }
+    });
 });
+
 
 
 function result_actions(result){
@@ -168,9 +241,6 @@ function result_actions(result){
     }else{
         $("#current-page").removeClass("d-none");
     }
-
-
-
 
 
     $("#first-page").text(first_page);
@@ -224,6 +294,7 @@ function formatDate(d) {
  }
 
 function fill_search_result_object_id(object_list, num, current_page){
+
     for (i = 0; i < num; i++) {
     object_name='#search-result-object-id-'.concat(i)
     element = (current_page - 1 ) * num + i

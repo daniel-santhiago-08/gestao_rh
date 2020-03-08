@@ -4,12 +4,13 @@ import sqlite3
 
 print(sqlite3.sqlite_version)
 
-@login_required
+# @login_required
 def home(request):
 
-    data = {}
-    data['usuario'] = request.user
-    return render(request, 'core/index.html', data)
+    # data = {}
+    # data['usuario'] = request.user
+    # return render(request, 'core/index.html', data)
+    return render(request, 'core/index.html')
 
 def template(request):
     return render(request, 'index.html')
