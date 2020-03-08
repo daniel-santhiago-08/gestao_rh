@@ -106,31 +106,6 @@ DATABASES = {
 }
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'pythonsqlite.db'),
-#     }
-# }
-
-
-# DATABASE_ROUTERS = ['gestao_rh.DBRoutes.DBRoutes']
-# DATABASE_ROUTERS = ['gestao_rh.gestao_rh.DBRoutes.DBRoutes']
-
-
-# DATABASES = {
-# 	'default': {
-#         'NAME' : 'DB_NLAB',
-#         'ENGINE': 'sql_server.pyodbc',
-#         'HOST': 'SPLADB30',
-#         'USER': '',
-#         'PASSWORD': '',
-#     }
-# }
-
-
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 

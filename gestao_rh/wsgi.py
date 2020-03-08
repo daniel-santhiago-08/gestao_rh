@@ -17,6 +17,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestao_rh.settings')
 
 # application = get_wsgi_application()
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 try:
@@ -24,6 +25,7 @@ try:
     print('WSGI without exception')
 except Exception:
     print('handling WSGI exception')
+    print(os.path.join(BASE_DIR, 'db.sqlite3'))
     # Error loading applications
     if 'mod_wsgi' in sys.modules:
         traceback.print_exc()

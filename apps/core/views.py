@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-# from apps.funcionarios.models import Funcionario
+import sqlite3
+
+print(sqlite3.sqlite_version)
 
 @login_required
 def home(request):
