@@ -21,28 +21,14 @@ $(function() {
     // CRIAÇÃO DO FILTRO
     createFilter(filters_dictionary, filter_element_id)
 
-    ajax_call(etapa, url, rows_per_page, order_by)
-
+    ajax_call(etapa, url, rows_per_page, order_by, filter_element_id)
 
     // FILTROS
-//    $.each(filters_dictionary, function(key,filter) {
-    $.each(filters_dictionary, function(key,filter) {
-        etapa = 'filtro';
-        object_id = "#"+filter['field_name']+"_search"
-
-        if (filter['type'] == 'text'){
-
-            $("#"+filter['field_name']+"_search").on('keyup', function(e) {
-            ajax_call(etapa, url, rows_per_page, order_by)
-            });
-        }else if (filter['type'] == 'date'){
-            $("#"+filter['field_name']+"_inicial_search").on('change', function(e) {
-            ajax_call(etapa, url, rows_per_page, order_by)
-            });
-            $("#"+filter['field_name']+"_final_search").on('change', function(e) {
-            ajax_call(etapa, url, rows_per_page, order_by)
-            });
-        }
+    filters = $(filter_element_id).find("input")
+    $.each(filters,function(key,filter) {
+        $("#"+filter['id']).bind('change keyup', function(e) {
+            ajax_call(etapa, url, rows_per_page, order_by,filter_element_id)
+        })
     });
 
 
@@ -52,7 +38,7 @@ $(function() {
         $('.btn-group button').not(this).removeClass("active");
         $(this).addClass("active");
 
-        ajax_call(etapa, url, rows_per_page, order_by)
+        ajax_call(etapa, url, rows_per_page, order_by,filter_element_id)
 
         id = $(this).attr("id");
         middle_pages = ['previous-page', 'current-page', 'next-page'];
@@ -78,46 +64,24 @@ $(function() {
         }else{
             order_by = field_asc;
         }
-        ajax_call(etapa, url, rows_per_page, order_by)
+        ajax_call(etapa, url, rows_per_page, order_by,filter_element_id)
     });
 
 });
 
-//function get_fields_ajax(url){
-//
-//    var filters_dictionary;
-//
-//    $.ajax({
-//    async: false,
-//    type: 'POST',
-//    url: url,
-//    data: {
-//        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-//        etapa: 'inicial'
-//    },
-//    success: function(result){
-//        fields_json = result;
-//
-//        var dict = []
-//        for (i=0; i<fields_json['field_name'].length; i++){
-//
-//            dict[i] = {
-//             'field_name': fields_json['field_name'][i],
-//             'label_name': fields_json['label_name'][i],
-//             'fields_type': fields_json['fields_type'][i],
-//             'type': fields_json['type'][i]}
-//            }
-//
-//        filters_dictionary = dict
-//        }
-//    });
-//
-//    return filters_dictionary;
-//
-//
-//}
 
-function ajax_call(etapa, url, rows_per_page, order_by){
+function ajax_call(etapa, url, rows_per_page, order_by, filter_element_id){
+
+    filters = $(filter_element_id).find("input");
+//    filter_values = []
+    json_filters = {}
+    $.each(filters, function(key,data) {
+//        filter_values.push(data['value'])
+        json_filters[data['id']] = data['value']
+    })
+
+
+//    filtros = filter_values
 
 
     $.ajax({
@@ -125,10 +89,12 @@ function ajax_call(etapa, url, rows_per_page, order_by){
     url: url,
     data: {
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-        pesquisa_produto: $('#produto_search').val(),
-        pesquisa_loja: $('#loja_search').val(),
-        pesquisa_data_inicial: $('#data_de_extracao_inicial_search').val(),
-        pesquisa_data_final: $('#data_de_extracao_final_search').val(),
+//        pesquisa_produto: $('#produto_search').val(),
+//        pesquisa_loja: $('#loja_search').val(),
+//        pesquisa_data_inicial: $('#data_de_extracao_inicial_search').val(),
+//        pesquisa_data_final: $('#data_de_extracao_final_search').val(),
+        filter_values: JSON.stringify(json_filters),
+//        filter_values: json_filters,
         rows_per_page: rows_per_page,
         current_page: $('.btn-group button.active').text(),
 //        teste_param: values ,

@@ -19,7 +19,7 @@ from .models import PriceCrawler, PriceCrawlerMin, PriceCrawlerEvolution
 from django.views.generic import ListView
 from django import forms
 from django.core import serializers
-
+from django.contrib.admin.options import get_content_type_for_model
 
 
 # def pdf_reportlab(request, queryset):
@@ -136,6 +136,8 @@ class PriceCrawlerList(ListView):
     field_names_order = ['id','loja','produto','data_de_extracao','preco']
 
     filename = 'Histórico'
+
+    # @classmethod
     def export_csv(self):
         dados = PriceCrawler.objects.using('crawler').all()
         response = HttpResponse(content_type='text/csv')
@@ -147,23 +149,34 @@ class PriceCrawlerList(ListView):
         min_date = queryset.order_by('data_de_extracao')[0].data_de_extracao
         max_date = queryset.order_by('-data_de_extracao')[0].data_de_extracao
 
-        pesquisa_produto = self.request.POST.get("pesquisa_produto", "")
-        pesquisa_loja = self.request.POST.get("pesquisa_loja", "")
-        pesquisa_data_inicial = self.request.POST.get("pesquisa_data_inicial", "")
-        if pesquisa_data_inicial == '':
-            pesquisa_data_inicial = min_date
+        filtros = self.request.POST.get("filter_values")
+        if filtros is None:
+            print("none")
+            queryset = queryset.filter(data_de_extracao__range=[min_date, max_date])
+        else:
+            filtros = json.loads(filtros)
+            queryset = queryset.filter(produto__icontains=filtros['produto_search'])
+            queryset = queryset.filter(loja__icontains=filtros['loja_search'])
+            if filtros['data_de_extracao_inicial_search'] == '':
+                queryset = queryset.filter(data_de_extracao__range=[min_date, max_date])
+            else:
+                queryset = queryset.filter(data_de_extracao__range=[
+                              filtros['data_de_extracao_inicial_search'],
+                              filtros['data_de_extracao_final_search']
+                              ])
 
-        pesquisa_data_final = self.request.POST.get("pesquisa_data_final", "")
-        if pesquisa_data_final == '':
-            pesquisa_data_final = max_date
+        # pesquisa_produto = self.request.POST.get("pesquisa_produto", "")
+        # pesquisa_loja = self.request.POST.get("pesquisa_loja", "")
+        # pesquisa_data_inicial = self.request.POST.get("pesquisa_data_inicial", "")
+        # if pesquisa_data_inicial == '':
+        #     pesquisa_data_inicial = min_date
+        # pesquisa_data_final = self.request.POST.get("pesquisa_data_final", "")
+        # if pesquisa_data_final == '':
+        #     pesquisa_data_final = max_date
+
+
         order_by = self.request.POST.get("order_by", "data_de_extracao")
-        queryset = queryset.filter(produto__icontains=pesquisa_produto)
-        queryset = queryset.filter(loja__icontains=pesquisa_loja)
-        # queryset = queryset.filter(data_de_extracao__range=[pesquisa_data_inicial,
-        #                                                     pesquisa_data_final])
 
-        queryset = queryset.filter(data_de_extracao__range=[str(pesquisa_data_inicial),
-                                                            pesquisa_data_final])
         queryset = queryset.order_by(order_by)
 
         return queryset
