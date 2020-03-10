@@ -13,48 +13,19 @@ from django_filters.views import FilterView
 import datetime
 import json
 import math
+import os
 from datetime import datetime, timedelta
 from django.db.models import Count, Min, Sum, Avg, Max
-from .models import PriceCrawler, PriceCrawlerMin, PriceCrawlerEvolution
+from .models import PriceCrawler, PriceCrawlerMin, PriceCrawlerEvolution, PriceCrawlerPrint
 from django.views.generic import ListView
 from django import forms
 from django.core import serializers
 from django.contrib.admin.options import get_content_type_for_model
 
 
-# def pdf_reportlab(request, queryset):
-#     response = HttpResponse(content_type='application/pdf')
-#     response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-#
-#     buffer = io.BytesIO()
-#     p = canvas.Canvas(buffer)
-#
-#     p.drawString(200, 810, 'Relatorio de Preços')
-#
-#     # prices = PriceCrawler.objects.using('crawler').all()
-#     prices = queryset
-#
-#     # funcionarios = PriceCrawler.objects.filter(
-#     #     empresa=request.user.funcionario.empresa)
-#
-#     str_ = 'Loja: %s | Preço: %.2f'
-#
-#     p.drawString(0, 800, '_' * 150)
-#
-#     y = 750
-#     for price in prices:
-#         p.drawString(10, y, str_ % (
-#             price.loja, price.preco))
-#         y -= 20
-#
-#     p.showPage()
-#     p.save()
-#
-#     pdf = buffer.getvalue()
-#     buffer.close()
-#     response.write(pdf)
-#
-#     return response
+from gestao_rh import settings
+
+
 
 def create_csv(response, filename, dados):
 
@@ -533,6 +504,119 @@ class PriceCrawlerLineChart(ListView):
         return HttpResponse(context_json, content_type='application/json')
 
 
+
+class PriceCrawlerPrintList(ListView):
+    model = PriceCrawlerPrint
+    context_object_name = 'prints'
+    DATABASE = 'crawler'
+    rows_per_page = 7
+    order_by = "-data"
+    filtered_fields = ['loja']
+    field_names_order = ['id','loja', 'produto','data']
+    filename = 'Prints'
+
+    def get_queryset(self):
+        queryset = self.model.objects.using(self.DATABASE).all()
+        min_date = queryset.order_by('data')[0].data
+        max_date = queryset.order_by('-data')[0].data
+
+        filtros = self.request.POST.get("filter_values")
+        if filtros is None:
+            print("none")
+            queryset = queryset.filter(data__range=[min_date, max_date])
+        else:
+            filtros = json.loads(filtros)
+            queryset = queryset.filter(produto__icontains=filtros['produto_search'])
+            queryset = queryset.filter(loja__icontains=filtros['loja_search'])
+            if filtros['data_inicial_search'] == '':
+                queryset = queryset.filter(data__range=[min_date, max_date])
+            else:
+                queryset = queryset.filter(data__range=[
+                              filtros['data_inicial_search'],
+                              filtros['data_final_search']
+                              ])
+
+        order_by = self.request.POST.get("order_by", "data")
+
+        queryset = queryset.order_by(order_by)
+
+        return queryset
+
+
+    def post(self, request, *args, **kwargs):
+
+        etapa_response = self.request.POST.get('etapa','')
+        if etapa_response == 'inicial':
+
+            fields = self.get_queryset().first()._meta.fields
+            fields_dictionary = get_fields_dictionary(fields)
+            context = {
+                'fields_dictionary': fields_dictionary,
+                'rows_per_page': self.rows_per_page,
+                'order_by': self.order_by,
+                'filtered_fields': self.filtered_fields,
+            }
+            context_json = json.dumps(
+                context,
+                sort_keys=True,
+                indent=1,
+                cls=DjangoJSONEncoder
+            )
+            return HttpResponse(context_json, content_type='application/json')
+
+        else:
+
+            querylist = list(self.get_queryset().values())
+            first_page = "1"
+            current_page = self.request.POST.get("current_page","1")
+
+            if current_page == '':
+                current_page = '1'
+            previous_page = str(int(current_page) - 1)
+            next_page = int(current_page) + 1
+            next_page = str(next_page)
+            total_rows = len(querylist)
+            last_page = math.ceil(total_rows / self.rows_per_page)
+
+            min_date = self.get_queryset().order_by('data')[0].data_de_extracao
+            max_date = self.get_queryset().order_by('-data')[0].data_de_extracao
+
+            fields = self.get_queryset().first()._meta.fields
+            fields_list = [ str(field).split('.')[-1] for field in fields ]
+
+            slice_start = (int(current_page) - 1) * self.rows_per_page + 0
+            slice_end = (int(current_page) - 1) * self.rows_per_page + self.rows_per_page
+
+            if self.field_names_order:
+                field_names_order = self.field_names_order
+            else:
+                field_names_order = []
+
+            context = {
+                'object_list': querylist[slice_start:slice_end],
+                'first_page': first_page,
+                'previous_page': previous_page,
+                'current_page': current_page,
+                'next_page': next_page,
+                'last_page': last_page,
+                'min_date': min_date,
+                'max_date': max_date,
+                'fields_list': fields_list,
+                'field_names_order': field_names_order,
+            }
+
+            context_json = json.dumps(
+                context,
+                sort_keys=True,
+                indent=1,
+                cls=DjangoJSONEncoder
+            )
+
+            return HttpResponse(context_json, content_type='application/json')
+
+
+
+
 #
 # class Render:
 #     @staticmethod
@@ -574,5 +658,26 @@ class PriceCrawlerExportCSV(View):
         response = HttpResponse(content_type='text/csv')
         response = create_csv(response, filename, dados)
         return response
+
+
+
+
+
+
+def PriceCrawlerPrints(request):
+
+    data = {}
+
+
+
+
+    files = os.listdir(os.path.join(settings.MEDIA_ROOT, "documentos/"))
+    print(files)
+    data['files'] = files
+
+    # data['usuario'] = request.user
+    # return render(request, 'core/index.html', data)
+    return render(request, 'price_crawler/prints.html', data)
+
 
 

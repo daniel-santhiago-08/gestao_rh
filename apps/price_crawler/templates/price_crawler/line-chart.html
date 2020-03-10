@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block navigation %}
+{% include 'navigation_bar.html' %}
+{% endblock %}
+
 {% block main %}
     <canvas id="productsChart" width="100%" ></canvas>
 {% endblock %}

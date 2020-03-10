@@ -37,3 +37,17 @@ class PriceCrawlerEvolution(models.Model):
     class Meta:
         managed = False
         db_table = 'Price_Crawler_Evolution'
+
+class PriceCrawlerPrint(models.Model):
+
+    loja = models.CharField(max_length=50)
+    produto = models.CharField(max_length=50)
+    data = models.DateField()
+    # photo = models.BinaryField(blank=True, null=True)
+    # photo = models.ImageField(upload_to=b'screenshots', blank=True, null=True)
+    url = models.CharField(max_length=100)
+    file_name = models.CharField(max_length=50)
+
+    class Meta:
+        managed = False
+        db_table = 'machine_print'

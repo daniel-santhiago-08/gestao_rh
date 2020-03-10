@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Histórico {% endblock %}
+{% block navigation %}
+{% include 'navigation_bar.html' %}
+{% endblock %}
+
+{% block export %}
+<!--{% include 'export.html' with csv='csv_hist' %}-->
+{% endblock %}
+
+
+{% block filter %}
+    {% include 'filter.html' %}
+{% endblock %}
+
+{% block main %}
+
+{% for print in prints %}
+
+<div class="card" style="width: 18rem;">
+  <img src="{{print.url}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">{{print.file_name}}</p>
+  </div>
+</div>
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}
+
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock %}
+
+{% block script %}
+<script> var url = "{% url 'list_price_crawler_prints' %}";</script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/crawler-functions.js' %}"></script>
+<script src="{% static 'js/price-crawler-print.js' %}"></script>
+{% endblock %}

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.core',
     'apps.price_crawler',
+    
 ]
 
 MIDDLEWARE = [
