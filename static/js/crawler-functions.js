@@ -2,6 +2,9 @@ function get_fields_ajax(url){
 
     var filters_dictionary;
 
+    console.log("get_fields_ajax")
+    console.log(url)
+
     $.ajax({
     async: false,
     type: 'POST',
@@ -206,6 +209,66 @@ function createFillTable(object_list,fields_list,field_names_order, order_by, da
     })
 
 }
+
+
+
+
+function createFillImages(object_list,fields_list,field_names_order, order_by, date_field){
+
+    $("#image-card-body").empty();
+
+    // CRIAÇÃO E PREENCHIMENTO DO CARD
+    $.each(object_list, function (row, data) {
+        id_row_name = "table-row-".concat(row)
+        zoomIn = " onmouseover=\"this.style.background='#E5F1FB '; this.style.color='#6F757A';  \" "
+        zoomOut = " onmouseout=\"this.style.background='';  this.style.color='black'; \" "
+        var table_row = $("<div id="+id_row_name+" class='card col-4' "+zoomIn+" "+zoomOut+" style='width: 15rem;'  ></div>").text('');
+
+        $("#image-card-body").append(table_row)
+
+
+
+
+//        image_data = $("<img src='"+data.url+"' class='card-img-top' onmouseover=\"this.style.width='24rem';\" onmouseout=\"this.style.width='15rem';\"  >").text('');
+        id_anchor_name = "card-image-".concat(row)
+        image_anchor_data = $("<a id="+id_anchor_name+"  href='"+data.url+"' target='_blank' ></a>").text('');
+        $("#"+id_row_name).append(image_anchor_data);
+
+
+//        zoomIn = " onmouseover=\"this.style.width='24rem'; this.style.height='18rem';  \" "
+//        zoomOut = " onmouseout=\"this.style.width='15rem'; this.style.height='12rem';  \" "
+
+//        zoomIn = " onmouseover=\"this.style.background='#ff0000 ';   \" "
+//        zoomOut = " onmouseout=\"this.style.background='';   \" "
+
+        zoomIn = ""
+        zoomOut = ""
+        image_data = $("<img src='"+data.url+"' class='card-img-top' "+zoomIn+" "+zoomOut+"  >").text('');
+        $("#"+id_anchor_name).append(image_data);
+
+
+        id_card_name = "card-body-".concat(row)
+        card_body = $("<div id="+id_card_name+" class='card-body'></div>").text('');
+        $("#"+id_row_name).append(card_body);
+
+        zoomIn = " onmouseover=\"this.style.color='#CCCCCC';   \" "
+        zoomOut = " onmouseout=\"this.style.color='black';   \" "
+
+        card_title = $("<h5 class='card-title text-center' "+zoomIn+" "+zoomOut+" ></h5>").text(data.loja);
+        $("#"+id_card_name).append(card_title);
+
+
+        card_body = $("<div class='card-text  text-center font-italic text-nowrap'></div>").text(data.data);
+        $("#"+id_card_name).append(card_body);
+
+
+
+
+
+    })
+
+}
+
 
 
 function formatDate(d) {

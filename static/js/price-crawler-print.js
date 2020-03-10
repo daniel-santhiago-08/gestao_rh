@@ -6,7 +6,6 @@ $(function() {
     var filter_element_id = "#filters-list";
 
     console.log("TESTE STATIC FOLDER");
-
     // REQUISIÇÃO PARA OBTER A LISTA DE CAMPOS DO MODELO
     result = get_fields_ajax(url)
     result[0] = fields_dictionary
@@ -73,15 +72,10 @@ $(function() {
 function ajax_call(etapa, url, rows_per_page, order_by, filter_element_id){
 
     filters = $(filter_element_id).find("input");
-//    filter_values = []
     json_filters = {}
     $.each(filters, function(key,data) {
-//        filter_values.push(data['value'])
         json_filters[data['id']] = data['value']
     })
-
-
-//    filtros = filter_values
 
 
     $.ajax({
@@ -89,21 +83,16 @@ function ajax_call(etapa, url, rows_per_page, order_by, filter_element_id){
     url: url,
     data: {
         csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-//        pesquisa_produto: $('#produto_search').val(),
-//        pesquisa_loja: $('#loja_search').val(),
-//        pesquisa_data_inicial: $('#data_de_extracao_inicial_search').val(),
-//        pesquisa_data_final: $('#data_de_extracao_final_search').val(),
+
         filter_values: JSON.stringify(json_filters),
-//        filter_values: json_filters,
         rows_per_page: rows_per_page,
         current_page: $('.btn-group button.active').text(),
-//        teste_param: values ,
         order_by: order_by
     },
     success: function(result){
         if (etapa == 'inicial') {
-            $('#data_de_extracao_inicial_search').attr('value', result['min_date']);
-            $('#data_de_extracao_final_search').attr('value', result['max_date']);
+            $('#data_inicial_search').attr('value', result['min_date']);
+            $('#data_final_search').attr('value', result['max_date']);
         }
 
         result_actions(result, order_by)
@@ -165,7 +154,8 @@ function result_actions(result, order_by){
     date_field = 'data_de_extracao'
 
     // CRIAÇÃO E PREENCHIMENTO DA TABELA COM JAVASCRIPT
-    createFillTable(object_list, fields_list, field_names_order, order_by, date_field)
+//    createFillTable(object_list, fields_list, field_names_order, order_by, date_field)
+    createFillImages(object_list, fields_list, field_names_order, order_by, date_field)
 
 }
 

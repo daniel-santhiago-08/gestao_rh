@@ -509,9 +509,9 @@ class PriceCrawlerPrintList(ListView):
     model = PriceCrawlerPrint
     context_object_name = 'prints'
     DATABASE = 'crawler'
-    rows_per_page = 7
+    rows_per_page = 6
     order_by = "-data"
-    filtered_fields = ['loja']
+    filtered_fields = ['loja','data']
     field_names_order = ['id','loja', 'produto','data']
     filename = 'Prints'
 
@@ -526,7 +526,7 @@ class PriceCrawlerPrintList(ListView):
             queryset = queryset.filter(data__range=[min_date, max_date])
         else:
             filtros = json.loads(filtros)
-            queryset = queryset.filter(produto__icontains=filtros['produto_search'])
+            # queryset = queryset.filter(produto__icontains=filtros['produto_search'])
             queryset = queryset.filter(loja__icontains=filtros['loja_search'])
             if filtros['data_inicial_search'] == '':
                 queryset = queryset.filter(data__range=[min_date, max_date])
@@ -539,6 +539,8 @@ class PriceCrawlerPrintList(ListView):
         order_by = self.request.POST.get("order_by", "data")
 
         queryset = queryset.order_by(order_by)
+
+        print(queryset)
 
         return queryset
 
@@ -578,8 +580,8 @@ class PriceCrawlerPrintList(ListView):
             total_rows = len(querylist)
             last_page = math.ceil(total_rows / self.rows_per_page)
 
-            min_date = self.get_queryset().order_by('data')[0].data_de_extracao
-            max_date = self.get_queryset().order_by('-data')[0].data_de_extracao
+            min_date = self.get_queryset().order_by('data')[0].data
+            max_date = self.get_queryset().order_by('-data')[0].data
 
             fields = self.get_queryset().first()._meta.fields
             fields_list = [ str(field).split('.')[-1] for field in fields ]
