@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Histórico {% endblock %}
+{% block title %} Prints {% endblock %}
 {% block navigation %}
 {% include 'navigation_bar.html' %}
 {% endblock %}
@@ -36,5 +36,5 @@
 <script> var url = "{% url 'list_price_crawler_prints' %}";</script>
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/crawler-functions.js' %}"></script>
-<script src="{% static 'js/price-crawler-print.js' %}"></script>
+<!--<script src="{% static 'js/price-crawler-print.js' %}"></script>-->
 {% endblock %}

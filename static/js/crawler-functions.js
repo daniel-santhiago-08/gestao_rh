@@ -1,3 +1,71 @@
+// INICIALIZAÇAO DA PÁGINA
+$(function() {
+
+    // INICIALIZAÇÃO DE VARIÁVEIS
+    var etapa = 'inicial';
+    var filter_element_id = "#filters-list";
+
+    // REQUISIÇÃO PARA OBTER A LISTA DE CAMPOS DO MODELO
+    result = get_fields_ajax(url)
+    result[0] = fields_dictionary
+    result[1] = rows_per_page
+    result[2] = order_by
+    result[3] = filtered_fields
+    result[4] = fillObject
+    result[5] = date_field
+    filters_dictionary = get_fields_dictionary(
+                            filtered_fields,
+                            fields_dictionary)
+
+    // CRIAÇÃO DO FILTRO
+    createFilter(filters_dictionary, filter_element_id)
+
+    ajax_call(etapa, url, rows_per_page, order_by, filter_element_id, fillObject, date_field)
+
+    // FILTROS
+    filters = $(filter_element_id).find("input")
+    $.each(filters,function(key,filter) {
+        $("#"+filter['id']).bind('change keyup', function(e) {
+            ajax_call(etapa, url, rows_per_page, order_by, filter_element_id, fillObject, date_field)
+        })
+    });
+
+    // PAGINAÇÃO
+    $('.btn-group button').on('click', function(e) {
+        etapa = 'pagination';
+        $('.btn-group button').not(this).removeClass("active");
+        $(this).addClass("active");
+
+        ajax_call(etapa, url, rows_per_page, order_by, filter_element_id, fillObject, date_field)
+
+        id = $(this).attr("id");
+        middle_pages = ['previous-page', 'current-page', 'next-page'];
+        check = middle_pages.includes(id);
+        if (check){
+            $(this).removeClass("active");
+        }
+    });
+
+
+    // ORDERNAÇÃO
+    $('.thead').on('click', 'i.fa' ,function() {
+        etapa = 'sort';
+        $(".thead").find("i").css('color', 'black');
+
+        field_asc = $(this).attr("id").split('-')[0]
+
+        if (order_by == field_asc){
+            order_by = '-'.concat(field_asc);
+        }else if (order_by == '-'.concat(field_asc)){
+            order_by = field_asc;
+        }else{
+            order_by = field_asc;
+        }
+        ajax_call(etapa, url, rows_per_page, order_by, filter_element_id, fillObject, date_field)
+    });
+
+});
+
 function get_fields_ajax(url){
 
     var filters_dictionary;
@@ -21,6 +89,8 @@ function get_fields_ajax(url){
         rows_per_page = result['rows_per_page'];
         order_by = result['order_by'];
         filtered_fields = result['filtered_fields'];
+        fillObject = result['fillObject'];
+        date_field = result['date_field'];
 
 
         var dict = []
@@ -37,7 +107,7 @@ function get_fields_ajax(url){
         }
     });
 
-    return [fields_dictionary, rows_per_page, order_by, filtered_fields];
+    return [fields_dictionary, rows_per_page, order_by, filtered_fields, fillObject, date_field];
 
 
 }
@@ -133,6 +203,100 @@ function createFilter(filters_dictionary, filter_element_id ){
         }
     })
 }
+
+
+
+
+function result_actions(result, order_by, fillObject, date_field){
+    console.log(result)
+    object_list = result['object_list']
+    first_page = result['first_page'];
+    previous_page = result['previous_page'];
+    current_page = result['current_page'];
+    next_page = result['next_page'];
+    last_page = result['last_page'];
+    fields_list = result['fields_list'];
+    field_names_order = result['field_names_order'];
+//    date_field = result['date_field'];
+
+
+    if (next_page >= last_page){
+        next_page = last_page;
+        $("#next-page").addClass("d-none");
+    }else{
+        $("#next-page").removeClass("d-none");
+    }
+
+    if (previous_page <= first_page){
+        previous_page = first_page;
+        $("#previous-page").addClass("d-none");
+    }else{
+        $("#previous-page").removeClass("d-none");
+    }
+
+    if ((current_page >= last_page) || (current_page <= first_page)) {
+        $("#current-page").addClass("d-none");
+        if (current_page >= last_page)  {
+            current_page = last_page;
+        }
+        if (current_page <= first_page) {
+            current_page = first_page;
+        }
+    }else{
+        $("#current-page").removeClass("d-none");
+        $("#current-page").addClass("active");
+
+    }
+
+    $("#first-page").text(first_page);
+    $("#previous-page").text(previous_page);
+    $("#current-page").text(current_page);
+    $("#next-page").text(next_page);
+    $("#last-page").text(last_page);
+
+
+    if (fillObject == 'table'){
+        createFillTable(object_list, fields_list, field_names_order, order_by, date_field)
+    }else if(fillObject == 'image'){
+        createFillImages(object_list, fields_list, field_names_order, order_by, date_field)
+    }
+
+
+}
+
+
+
+function ajax_call(etapa, url, rows_per_page, order_by, filter_element_id, fillObject, date_field){
+
+    filters = $(filter_element_id).find("input");
+    json_filters = {}
+    $.each(filters, function(key,data) {
+        json_filters[data['id']] = data['value']
+    })
+
+    $.ajax({
+    type: 'POST',
+    url: url,
+    data: {
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        filter_values: JSON.stringify(json_filters),
+        rows_per_page: rows_per_page,
+        current_page: $('.btn-group button.active').text(),
+        order_by: order_by
+    },
+    success: function(result){
+        if (etapa == 'inicial') {
+//            $('#data_de_extracao_inicial_search').attr('value', result['min_date']);
+            $('#'+date_field+'_inicial_search').attr('value', result['min_date']);
+//            $('#data_de_extracao_final_search').attr('value', result['max_date']);
+            $('#'+date_field+'_final_search').attr('value', result['max_date']);
+        }
+
+        result_actions(result, order_by, fillObject, date_field)
+    }
+    });
+}
+
 
 function createFillTable(object_list,fields_list,field_names_order, order_by, date_field){
 
