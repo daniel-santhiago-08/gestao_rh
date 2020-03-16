@@ -23,7 +23,7 @@ from django.core import serializers
 from django.contrib.admin.options import get_content_type_for_model
 from gestao_rh import settings
 
-from .views_functions import *
+from apps.core.views_functions import *
 
 
 

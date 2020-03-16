@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', include('apps.core.urls')),
     path('price-crawler/', include('apps.price_crawler.urls')),
+    path('manual/', include('apps.manual_test.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     # path('admin_app/', include('admin_app.urls')),

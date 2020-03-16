@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Manual Products {% endblock %}
+{% block navigation %}
+{% include 'navigation_bar.html' %}
+{% endblock %}
+
+{% block export %}
+{% include 'export.html' with csv='csv_product' %}
+{% endblock %}
+
+
+{% block filter %}
+    {% include 'filter.html' %}
+{% endblock %}
+
+{% block main %}
+
+
+<table id="table-fill"
+       class="table rounded mt-2 table-sm" >
+    <thead id="table-fill-header" class="thead"></thead>
+    <tbody id="table-fill-body"></tbody>
+</table>
+
+
+{% endblock %}
+
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock %}
+
+{% block script %}
+<script> var url = "{% url 'list_manual_product_ids' %}";</script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/crawler-functions.js' %}"></script>
+<!--<script src="{% static 'js/price-crawler-hist.js' %}"></script>-->
+{% endblock %}

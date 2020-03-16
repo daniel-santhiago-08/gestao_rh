@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 #
 
 import os
+import psycopg2
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.core',
     'apps.price_crawler',
-    
+    'apps.manual_test',
+
 ]
 
 MIDDLEWARE = [
@@ -104,6 +106,14 @@ DATABASES = {
     'crawler': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'pythonsqlite.db'),
+    },
+    'manual': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'manual',
+        'USER': 'daniel_santhiago',
+        'PASSWORD': 'DWhouse130_',
+        'HOST': 'database-1.czm3momztmix.sa-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

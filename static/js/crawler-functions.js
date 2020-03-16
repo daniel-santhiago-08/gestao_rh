@@ -157,7 +157,8 @@ function createFilter(filters_dictionary, filter_element_id ){
 
 
             input_search_id = filter_field.field_name+"_inicial"+"_search"
-            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control mx-2'>").text('');
+//            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control mx-2'>").text('');
+            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control'>").text('');
             $("#"+input_group_id).append(input_search);
 
             /////////////////////////////////////////////////////////////
@@ -177,7 +178,8 @@ function createFilter(filters_dictionary, filter_element_id ){
 
 
             input_search_id = filter_field.field_name+"_final"+"_search"
-            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control mx-2'>").text('');
+//            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control mx-2'>").text('');
+            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control'>").text('');
             $("#"+input_group_id).append(input_search);
 
 
@@ -188,7 +190,7 @@ function createFilter(filters_dictionary, filter_element_id ){
 
             ig_prepend_id = "input-group-prepend-"+filter_field.field_name
             ig_prepend_class = "input-group-prepend justify-content-center mb-1"
-            input_group_prepend = $("<div id="+ig_prepend_id+" class='"+ig_prepend_class+"' style='width: 100%;'></div>").text('');
+            input_group_prepend = $("<div id="+ig_prepend_id+" class='"+ig_prepend_class+"' ></div>").text('');
             $("#"+input_group_id).append(input_group_prepend);
 
             input_group_text_id = "input-group-text-"+filter_field.field_name
@@ -197,7 +199,8 @@ function createFilter(filters_dictionary, filter_element_id ){
 
 
             input_search_id = filter_field.field_name+"_search"
-            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control mx-2'>").text('');
+//            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control mx-2'>").text('');
+            input_search = $("<input type="+filter_field.type+" id="+input_search_id+" class='form-control'>").text('');
             $("#"+input_group_id).append(input_search);
 
         }
