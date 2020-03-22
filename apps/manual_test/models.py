@@ -12,8 +12,8 @@ class ManualProductIds(models.Model):
     multiplicador_capsula = models.DecimalField(decimal_places=2, max_digits=5)
     multiplicador_caixa = models.DecimalField(decimal_places=2, max_digits=5)
     child_productid = models.CharField(max_length=50)
-    sku_GA = models.CharField(max_length=50)
-    produto_GA = models.CharField(max_length=100)
+    sku_ga = models.CharField(max_length=50)
+    produto_ga = models.CharField(max_length=100)
 
     class Meta:
         managed = False
