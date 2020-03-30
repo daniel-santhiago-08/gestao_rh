@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Evolução {% endblock %}
+{% block navigation %}
+{% include 'navigation_bar.html' %}
+{% endblock %}
+
+{% block export %}
+{% include 'export.html' with csv='csv_evolution' %}
+{% endblock %}
+
+{% block filter %}
+    {% include 'filter.html' %}
+{% endblock %}
+
+{% block main %}
+
+
+<table id="table-fill"
+       class="table rounded mt-2 table-sm" >
+    <thead id="table-fill-header" class="thead"></thead>
+    <tbody id="table-fill-body"></tbody>
+</table>
+
+{% endblock %}
+
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock %}
+
+{% block script %}
+<script> var url = "{% url 'list_price_crawler_evolution_old' %}";</script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/crawler-functions.js' %}"></script>
+<!--<script src="{% static 'js/price-crawler-evolution.js' %}"></script>-->
+{% endblock %}
+

@@ -113,6 +113,14 @@ DATABASES = {
         'PASSWORD': 'DWhouse130_',
         'HOST': 'database-1.czm3momztmix.sa-east-1.rds.amazonaws.com',
         'PORT': '5432',
+    },
+    'machines_crawler': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'machines_crawler',
+        'USER': 'daniel_santhiago',
+        'PASSWORD': 'DWhouse130_',
+        'HOST': 'dolce-gusto-medium.czm3momztmix.sa-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Prints {% endblock %}
+{% block navigation %}
+{% include 'navigation_bar.html' %}
+{% endblock %}
+
+{% block export %}
+<!--{% include 'export.html' with csv='csv_hist' %}-->
+{% endblock %}
+
+
+{% block filter %}
+    {% include 'filter.html' %}
+{% endblock %}
+
+{% block main %}
+
+
+<div id="image-card-body" class="row">
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock %}
+
+{% block script %}
+<script> var url = "{% url 'list_price_crawler_prints_old' %}";</script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/crawler-functions.js' %}"></script>
+<!--<script src="{% static 'js/price-crawler-print.js' %}"></script>-->
+{% endblock %}

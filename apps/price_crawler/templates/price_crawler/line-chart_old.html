@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navigation %}
+{% include 'navigation_bar.html' %}
+{% endblock %}
+
+{% block main %}
+    <canvas id="productsChart" width="100%" ></canvas>
+{% endblock %}
+{% block script %}
+<script> var url = "{% url 'price_crawler_line_old' %}";</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="{% static 'js/chartjs-line-chart.js' %}"></script>
+
+{% endblock %}
+

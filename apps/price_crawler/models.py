@@ -5,29 +5,29 @@ from django.db import models
 class PriceCrawler(models.Model):
 
     produto = models.CharField(max_length=50)
-    data_de_extracao = models.DateField()
+    data_extracao = models.DateField()
     loja = models.CharField(max_length=50)
     preco = models.DecimalField(decimal_places=2, max_digits=7)
 
     class Meta:
         managed = False
-        db_table = 'Price_Crawler_Hist'
+        db_table = 'price_crawler_hist'
 
 class PriceCrawlerMin(models.Model):
 
     produto = models.CharField(max_length=50)
-    data_de_extracao = models.DateField()
+    data_extracao = models.DateField()
     loja = models.CharField(max_length=50)
     preco = models.DecimalField(decimal_places=2, max_digits=7)
 
     class Meta:
         managed = False
-        db_table = 'Price_Crawler_Min_Price'
+        db_table = 'price_crawler_min'
 
 
 class PriceCrawlerEvolution(models.Model):
 
-    data_de_extracao = models.DateField()
+    data_extracao = models.DateField()
     mini_me = models.DecimalField(decimal_places=2, max_digits=7)
     essenza = models.DecimalField(decimal_places=2, max_digits=7)
     inissia = models.DecimalField(decimal_places=2, max_digits=7)
@@ -36,7 +36,7 @@ class PriceCrawlerEvolution(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'Price_Crawler_Evolution'
+        db_table = 'price_crawler_evolution'
 
 class PriceCrawlerPrint(models.Model):
 
@@ -46,7 +46,7 @@ class PriceCrawlerPrint(models.Model):
     # photo = models.BinaryField(blank=True, null=True)
     # photo = models.ImageField(upload_to=b'screenshots', blank=True, null=True)
     url = models.CharField(max_length=100)
-    file_name = models.CharField(max_length=50)
+    # file_name = models.CharField(max_length=50)
 
     class Meta:
         managed = False

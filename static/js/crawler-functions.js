@@ -398,7 +398,10 @@ function createFillImages(object_list,fields_list,field_names_order, order_by, d
 
 //        image_data = $("<img src='"+data.url+"' class='card-img-top' onmouseover=\"this.style.width='24rem';\" onmouseout=\"this.style.width='15rem';\"  >").text('');
         id_anchor_name = "card-image-".concat(row)
+//        url_path = 'https://brazil-nestle-ndg.s3-sa-east-1.amazonaws.com/screenshots/Essenza/Casas_Bahia_28_03_2020.png'
+//        url_path = 'https://brazil-nestle-ndg.s3-sa-east-1.amazonaws.com/screenshots/Essenza/Casas_Bahia_29_03_2020.png'
         image_anchor_data = $("<a id="+id_anchor_name+"  href='"+data.url+"' target='_blank' ></a>").text('');
+//        image_anchor_data = $("<a id="+id_anchor_name+"  href='"+url_path+"' target='_blank' ></a>").text('');
         $("#"+id_row_name).append(image_anchor_data);
 
 
@@ -410,7 +413,10 @@ function createFillImages(object_list,fields_list,field_names_order, order_by, d
 
         zoomIn = ""
         zoomOut = ""
-        image_data = $("<img src='"+data.url+"' class='card-img-top' "+zoomIn+" "+zoomOut+"  >").text('');
+//        url_path = 'https://brazil-nestle-ndg.s3-sa-east-1.amazonaws.com/screenshots/Essenza/Casas_Bahia_28_03_2020.png'
+//        url_path = 'https://brazil-nestle-ndg.s3-sa-east-1.amazonaws.com/screenshots/Essenza/Casas_Bahia_29_03_2020.png'
+//        image_data = $("<img src='"+url_path+"' class='card-img-top' "+zoomIn+" "+zoomOut+"  >").text('');
+        image_data = $("<img src='"+data.url+"'  class='card-img-top' "+zoomIn+" "+zoomOut+"  >").text('');
         $("#"+id_anchor_name).append(image_data);
 
 
@@ -424,6 +430,8 @@ function createFillImages(object_list,fields_list,field_names_order, order_by, d
         card_title = $("<h5 class='card-title text-center' "+zoomIn+" "+zoomOut+" ></h5>").text(data.loja);
         $("#"+id_card_name).append(card_title);
 
+        card_title = $("<h5 class='card-title text-center' "+zoomIn+" "+zoomOut+" ></h5>").text(data.produto);
+        $("#"+id_card_name).append(card_title);
 
         card_body = $("<div class='card-text  text-center font-italic text-nowrap'></div>").text(data.data);
         $("#"+id_card_name).append(card_body);

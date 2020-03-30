@@ -29,20 +29,20 @@ from apps.core.views_functions import *
 
 class PriceCrawlerList(ListView):
     ''' Database utilizado em settings.py '''
-    DATABASE = 'crawler'
+    DATABASE = 'machines_crawler'
     ''' Modelo do Django '''
     model = PriceCrawler
     ''' Ordem das colunas  '''
-    field_names_order = ['id', 'loja', 'produto', 'data_de_extracao', 'preco']
+    field_names_order = ['id', 'loja', 'produto', 'data_extracao', 'preco']
     ''' Ordenação inicial:   
         Ordem Descrescente -> Sufixo '-'  +  Nome do campo   
         Ordem Crescente ->                   Nome do campo  
     '''
-    order_by = "-data_de_extracao"
+    order_by = "-data_extracao"
     ''' Campo de Data: Nome do campo '''
-    date_field = 'data_de_extracao'
+    date_field = 'data_extracao'
     ''' Lista de Filtros: Nome dos campos que serão apresentados nos filtros '''
-    filtered_fields = ['produto', 'loja', 'data_de_extracao']
+    filtered_fields = ['produto', 'loja', 'data_extracao']
     ''' Número de registros por página '''
     rows_per_page = 10
     ''' Tipo de objeto que será preenchido pelo Queryset '''
@@ -52,7 +52,7 @@ class PriceCrawlerList(ListView):
 
     # @classmethod
     # def export_csv(self):
-    #     dados = PriceCrawler.objects.using('crawler').all()
+    #     dados = PriceCrawler.objects.using('machines_crawler').all()
     #     response = HttpResponse(content_type='text/csv')
     #     response = create_csv(response, 'Histórico', dados)
     #     return response
@@ -84,12 +84,12 @@ class PriceCrawlerList(ListView):
 
 class PriceCrawlerMinList(ListView):
     model = PriceCrawlerMin
-    DATABASE = 'crawler'
+    DATABASE = 'machines_crawler'
     rows_per_page = 10
-    order_by = "-data_de_extracao"
-    filtered_fields = ['produto','loja','data_de_extracao']
-    field_names_order = ['id','loja','produto','data_de_extracao','preco']
-    date_field = 'data_de_extracao'
+    order_by = "-data_extracao"
+    filtered_fields = ['produto','loja','data_extracao']
+    field_names_order = ['id','loja','produto','data_extracao','preco']
+    date_field = 'data_extracao'
     filename = 'PreçoMínimo'
     fillObject = 'table'  # 'table' or 'image'
 
@@ -117,13 +117,13 @@ class PriceCrawlerMinList(ListView):
 
 class PriceCrawlerEvolutionList(ListView):
     model = PriceCrawlerEvolution
-    DATABASE = 'crawler'
+    DATABASE = 'machines_crawler'
     rows_per_page = 7
-    order_by = "-data_de_extracao"
-    filtered_fields = ['data_de_extracao']
-    field_names_order = ['id','data_de_extracao',
+    order_by = "-data_extracao"
+    filtered_fields = ['data_extracao']
+    field_names_order = ['id','data_extracao',
      'mini_me','essenza','inissia','mimo_cafeteira','pop_plus']
-    date_field = 'data_de_extracao'
+    date_field = 'data_extracao'
     filename = 'Evolução'
     fillObject = 'table'  # 'table' or 'image'
 
@@ -155,10 +155,10 @@ class PriceCrawlerLineChart(ListView):
 
     def post(self, request, *args, **kwargs):
 
-        dados = PriceCrawlerEvolution.objects.using('crawler').all()
-        datas = [obj.data_de_extracao.strftime("%Y") + '-' +
-                 obj.data_de_extracao.strftime("%m") + '-' +
-                 obj.data_de_extracao.strftime("%d")
+        dados = PriceCrawlerEvolution.objects.using('machines_crawler').all()
+        datas = [obj.data_extracao.strftime("%Y") + '-' +
+                 obj.data_extracao.strftime("%m") + '-' +
+                 obj.data_extracao.strftime("%d")
                  for obj in dados]
 
         mini_me = [int(obj.mini_me) for obj in dados]
@@ -189,10 +189,10 @@ class PriceCrawlerLineChart(ListView):
 
 class PriceCrawlerPrintList(ListView):
     model = PriceCrawlerPrint
-    DATABASE = 'crawler'
+    DATABASE = 'machines_crawler'
     rows_per_page = 6
     order_by = "-data"
-    filtered_fields = ['loja','data']
+    filtered_fields = ['produto','loja','data']
     field_names_order = ['id','loja', 'produto','data']
     date_field = 'data'
     filename = 'Prints'
@@ -217,7 +217,7 @@ class PriceCrawlerPrintList(ListView):
 # class PriceCrawlerExportCSV(View):
 #     def get(self, request):
 #         filename = 'Histórico'
-#         dados = PriceCrawler.objects.using('crawler').all()
+#         dados = PriceCrawler.objects.using('machines_crawler').all()
 #         response = HttpResponse(content_type='text/csv')
 #         response = create_csv(response, filename, dados)
 #         return response

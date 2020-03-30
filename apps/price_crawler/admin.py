@@ -4,11 +4,11 @@ from .models import PriceCrawler, PriceCrawlerEvolution, PriceCrawlerPrint
 
 class PriceCrawlerAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
-        return PriceCrawler.objects.using('crawler').all()
+        return PriceCrawler.objects.using('machines_crawler').all()
 
 class PriceCrawlerEvolutionAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
-        return PriceCrawlerEvolution.objects.using('crawler').all()
+        return PriceCrawlerEvolution.objects.using('machines_crawler').all()
 
 class PriceCrawlerPrintAdmin(admin.ModelAdmin):
     def get_queryset(self, request):

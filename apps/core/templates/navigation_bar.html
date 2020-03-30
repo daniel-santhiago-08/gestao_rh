@@ -4,12 +4,33 @@
             <font color="#824B34" face="Verdana, Geneva, sans-serif" >Nescafé Dolce Gusto</font>
         </a>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'list_manual_product_ids' %}">
-                    <font color="#824B34" face="Verdana, Geneva, sans-serif" >Produtos</font>
-                </a>
-            </li>
+            
 
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+                   href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <font color="#824B34"
+                   face="Verdana, Geneva, sans-serif">Crawler Máquinas Histórico</font>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'list_price_crawler_hist_old' %}">
+                        <font color="#824B34" face="Verdana, Geneva, sans-serif" >Histórico</font>
+                    </a>
+                    <a class="dropdown-item" href="{% url 'list_price_crawler_min_old' %}">
+                        <font color="#824B34" face="Verdana, Geneva, sans-serif" >Menor Preço</font>
+                    </a>
+                    <a class="dropdown-item" href="{% url 'list_price_crawler_evolution_old' %}">
+                        <font color="#824B34" face="Verdana, Geneva, sans-serif" >Evolução Preço</font>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'list_price_crawler_prints_old' %}">
+                        <font color="#824B34" face="Verdana, Geneva, sans-serif" >Prints</font>
+                    </a>
+                    <a class="dropdown-item" href="{% url 'price_crawler_line_old' %}">
+                        <font color="#824B34" face="Verdana, Geneva, sans-serif" >Gráfico Linha</font>
+                    </a>
+                </div>
+            </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown"
